@@ -28,18 +28,20 @@ public final class PrepareService {
             + updateArgument
         )
 
-        try Self.runAndPrint(
-            [
-                "tuist",
-                "cache",
-                "warm",
-                "--dependencies-only"
-            ]
-            + targets
-            + pathArgument
-            + profileArgument
-            + xcframeworksArgument
-        )
+        if !ignoreCache {
+            try Self.runAndPrint(
+                [
+                    "tuist",
+                    "cache",
+                    "warm",
+                    "--dependencies-only"
+                ]
+                + targets
+                + pathArgument
+                + profileArgument
+                + xcframeworksArgument
+            )
+        }
 
         try Self.runAndPrint(
             [
