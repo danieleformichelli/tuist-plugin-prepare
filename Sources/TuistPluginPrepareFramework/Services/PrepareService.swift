@@ -21,9 +21,13 @@ public final class PrepareService {
         let updateArgument = update ? ["--update"] : []
         let xcframeworksArgument = xcframeworks ? ["--xcframeworks"] : []
 
+        guard let tuistBinaryPath = ProcessInfo.processInfo.environment["TUIST_CONFIG_BINARY_PATH"] else {
+            fatalError("Can't find tuist binary path")
+        }
+
         try Self.runAndPrint([
             [
-                "tuist",
+                tuistBinaryPath,
                 "fetch"
             ],
             pathArgument,
@@ -33,7 +37,7 @@ public final class PrepareService {
         if !ignoreCache {
             try Self.runAndPrint([
                 [
-                    "tuist",
+                    tuistBinaryPath,
                     "cache",
                     "warm",
                     "--dependencies-only"
@@ -47,7 +51,7 @@ public final class PrepareService {
 
         try Self.runAndPrint([
             [
-                "tuist",
+                tuistBinaryPath,
                 "generate",
             ],
             targets,
